@@ -7,11 +7,11 @@ require "mobile_auth/version"
 Gem::Specification.new do |s|
   s.name        = "mobile_auth"
   s.version     = MobileAuth::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of MobileAuth."
-  s.description = "TODO: Description of MobileAuth."
+  s.authors     = ["andyHu"]
+  s.email       = ["meeasyhappy@gmail.com"]
+  s.homepage    = "http://ml-china.org"
+  s.summary     = "use mobile to auth user "
+  s.description = "use mobile to auth user"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
