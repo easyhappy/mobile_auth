@@ -1,0 +1,4 @@
+= MobileAuth
+利用手机号 完成注册、登录、token验证等一套逻辑
+
+This project rocks and uses MIT-LICENSE.
