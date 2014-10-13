@@ -40,6 +40,25 @@ module MobileAuth
       ROUTES[module_name] = key
     end
   end
+
+  class Getter
+    def initialize name
+      @name = name
+    end
+
+    def get
+      ActiveSupport::Dependencies.constantize(@name)
+    end
+  end
+
+  def ref(arg)
+    if defined? ActiveSupport::Dependencies::ClassCache
+      ActiveSupport::Dependencies::reference(arg)
+      Getter.new(arg)
+    else
+      ActiveSupport::Dependencies.ref(arg)
+    end
+  end
 end
 
 require 'warden'

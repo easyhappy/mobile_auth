@@ -6,12 +6,23 @@ module MobileAuth
 
     def initialize(name, options)
       @singular = :user
+
+      @class_name = (options[:class_name] || name.to_s.classify).to_s
+      @klass = MobileAuth.ref(@class_name)
+
       default_used_route options
+    end
+
+    def to
+      @klass.get
     end
 
     def modules
       #[:database_authenticatable, :rememberable, :recoverable, :registerable, :validatable, :trackable]
+      require 'pry'
+      binding.pry
       [:database_authenticatable]
+
     end
 
     def routes
