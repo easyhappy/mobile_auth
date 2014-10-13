@@ -12,7 +12,7 @@ module ActionDispatch::Routing
         mobile_auth_scope mapping.name do
           #with_devise_exclusive_scope mapping.fullpath, mapping.name, options do
           routes.each { |mod|
-            send("devise_session", mapping, 'users')
+            send("devise_#{mod}", mapping, 'users')
             break
           }
           #end

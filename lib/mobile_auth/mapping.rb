@@ -10,12 +10,13 @@ module MobileAuth
     end
 
     def modules
-      [:database_authenticatable, :rememberable, :recoverable, :registerable, :validatable, :trackable]
+      #[:database_authenticatable, :rememberable, :recoverable, :registerable, :validatable, :trackable]
+      [:database_authenticatable]
     end
 
     def routes
       #@routes ||= ROUTES.values_at(*self.modules).compact.uniq
-      @routes = [:sessions]
+      @routes ||= ROUTES.values_at(*self.modules).compact.uniq
     end
 
     private

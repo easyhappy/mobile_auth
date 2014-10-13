@@ -23,13 +23,26 @@ module MobileAuth
   @@warden_config = nil
   @@warden_config_blocks = []
 
+  ROUTES      = ActiveSupport::OrderedHash.new
+
   def add_mapping resource, options
     mapping = MobileAuth::Mapping.new(resource, options)
     @@mappings[mapping.name] = mapping
     mapping
   end
+
+  def add_module module_name, options={}
+    if route = options[:route]
+      case route
+      when Hash
+        key, value = route.keys.first, route.values.flatten
+      end
+      ROUTES[module_name] = key
+    end
+  end
 end
 
 require 'warden'
+require 'mobile_auth/modules'
 require 'mobile_auth/mapping'
 require 'mobile_auth/engine'
