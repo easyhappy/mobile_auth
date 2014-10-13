@@ -13,7 +13,6 @@ module ActionDispatch::Routing
           #with_devise_exclusive_scope mapping.fullpath, mapping.name, options do
           routes.each { |mod|
             send("devise_#{mod}", mapping, 'users')
-            break
           }
           #end
         end
@@ -34,7 +33,7 @@ module ActionDispatch::Routing
 
     def devise_session(mapping, controllers) #:nodoc:
       resource :session, only: [], controller: :sessions, path: "" do
-        post  :create,  path: '/'
+        post   :create,  path: '/'
         delete :destroy, path: '/', as: "destroy"
       end
     end
