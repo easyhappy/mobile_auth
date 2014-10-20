@@ -23,6 +23,7 @@ module MobileAuth
   @@warden_config = nil
   @@warden_config_blocks = []
 
+  ALL         = []
   ROUTES      = ActiveSupport::OrderedHash.new
 
   def add_mapping resource, options
@@ -32,6 +33,7 @@ module MobileAuth
   end
 
   def add_module module_name, options={}
+    ALL << module_name
     if route = options[:route]
       case route
       when Hash
@@ -62,6 +64,10 @@ module MobileAuth
 end
 
 require 'warden'
+require 'mobile_auth/models'
 require 'mobile_auth/modules'
 require 'mobile_auth/mapping'
 require 'mobile_auth/engine'
+
+# require 'orm_adapter/adapters/active_record'
+ActiveRecord::Base.extend MobileAuth::Models

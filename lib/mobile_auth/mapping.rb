@@ -20,9 +20,7 @@ module MobileAuth
     def modules
       #[:database_authenticatable, :rememberable, :recoverable, :registerable, :validatable, :trackable]
       require 'pry'
-      binding.pry
       [:database_authenticatable]
-
     end
 
     def routes
