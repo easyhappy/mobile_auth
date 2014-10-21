@@ -23,6 +23,10 @@ module MobileAuth
   @@warden_config = nil
   @@warden_config_blocks = []
 
+  # Used to encrypt password. Please generate one with rake secret.
+  mattr_accessor :pepper
+  @@pepper = nil
+
   ALL         = []
   ROUTES      = ActiveSupport::OrderedHash.new
 
@@ -40,6 +44,13 @@ module MobileAuth
         key, value = route.keys.first, route.values.flatten
       end
       ROUTES[module_name] = key
+    end
+
+    if options[:model] == true
+      path = "mobile_auth/models/#{module_name}"
+      camelized = ActiveSupport::Inflector.camelize(module_name.to_s)
+      MobileAuth::Models.send(:autoload, camelized.to_sym, path)
+      puts "xiaobei"
     end
   end
 
