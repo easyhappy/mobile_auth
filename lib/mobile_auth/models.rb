@@ -20,7 +20,17 @@ module MobileAuth
       accessors.each do |accessor|
         mod.class_eval <<-METHOD, __FILE__, __LINE__ + 1
           def self.#{accessor}
-            puts "hello"
+            if defined?(@#{accessor})
+                @#{accessor}
+              elsif superclass.respond_to?(:#{accessor})
+                superclass.#{accessor}
+              else
+                MobileAuth.#{accessor}
+            end
+          end
+
+          def self.#{accessor}=(value)
+            @#{accessor} = value
           end
         METHOD
 

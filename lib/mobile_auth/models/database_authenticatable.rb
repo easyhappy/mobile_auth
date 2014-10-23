@@ -15,13 +15,26 @@ module MobileAuth
         attr_reader   :password, :current_password
         attr_accessor :password_confirmation
 
-        MobileAuth::Models.config(self, :pepper)
+        MobileAuth::Models.config(self, :pepper, :stretches)
       end
 
       # Generates password encryption based on the given value.
       def password=(new_password)
         @password = new_password
         self.encrypted_password = password_digest(@password) if @password.present?
+      end
+
+      # Verifies whether an password (ie from sign in) is the user password.
+      def valid_password?(password)
+        return false if encrypted_password.blank?
+        bcrypt   = ::BCrypt::Password.new(encrypted_password)
+        password = ::BCrypt::Engine.hash_secret("#{password}#{self.class.pepper}", bcrypt.salt)
+        MobileAuth.secure_compare(password, encrypted_password)
+      end
+
+      # Set password and password confirmation to nil
+      def clean_up_passwords
+        self.password = self.password_confirmation = nil
       end
 
       protected

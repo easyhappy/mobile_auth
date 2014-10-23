@@ -27,6 +27,10 @@ module MobileAuth
   mattr_accessor :pepper
   @@pepper = nil
 
+  # The number of times to encrypt password.
+  mattr_accessor :stretches
+  @@stretches = 10
+
   ALL         = []
   ROUTES      = ActiveSupport::OrderedHash.new
 
@@ -52,6 +56,16 @@ module MobileAuth
       MobileAuth::Models.send(:autoload, camelized.to_sym, path)
       puts "xiaobei"
     end
+  end
+
+  # constant-time comparison algorithm to prevent timing attacks
+  def self.secure_compare(a, b)
+    return false if a.blank? || b.blank? || a.bytesize != b.bytesize
+    l = a.unpack "C#{a.bytesize}"
+
+    res = 0
+    b.each_byte { |byte| res |= byte ^ l.shift }
+    res == 0
   end
 
   class Getter
